@@ -8,6 +8,7 @@ import {
   doc,
   getDoc,
   updateDoc,
+  deleteDoc,
   type DocumentData,
   type FirestoreDataConverter,
   type QuerySnapshot
@@ -90,7 +91,7 @@ export async function createDocument(
     createdAt: now,
     lastModifiedAt: now,
     lastModifiedBy: user.userId,
-    gridSize: { rows: 40, cols: 14 }
+    gridSize: { rows: 40, cols: 26 }
   };
 
   // Add a doc; Firestore will assign ID.
@@ -147,4 +148,12 @@ export async function updateDocumentTitle(docId: string, title: string): Promise
     title: title.trim() || "Untitled spreadsheet",
     lastModifiedAt: serverTimestamp()
   });
+}
+
+/**
+ * Delete a document by ID
+ */
+export async function deleteDocument(docId: string): Promise<void> {
+  const docRef = doc(getDb(), COLLECTION, docId);
+  await deleteDoc(docRef);
 }

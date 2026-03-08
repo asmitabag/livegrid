@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSessionUser } from "@/lib/session/useSessionUser";
 import { OnboardingCard } from "@/components/identity/OnboardingCard";
+import { signInWithGoogle } from "@/lib/firebase/auth";
 
 export function IdentityGate({ children }: { children: React.ReactNode }) {
   const { user, setDisplayName } = useSessionUser();
@@ -11,8 +12,16 @@ export function IdentityGate({ children }: { children: React.ReactNode }) {
 
   useEffect(() => setMounted(true), []);
 
+  const handleSignInWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      // useSessionUser's onAuthStateChanged listener will pick up the signed-in user automatically.
+    } catch (err) {
+      console.error("Google sign-in failed:", err);
+    }
+  };
+
   // Hydration-safe: server and first client render match.
-  // You can return null, or a small skeleton. Keep it stable.
   if (!mounted) {
     return (
       <div className="mx-auto w-full max-w-6xl px-4 py-10">
@@ -31,6 +40,7 @@ export function IdentityGate({ children }: { children: React.ReactNode }) {
             displayName={pendingName}
             onChangeDisplayName={setPendingName}
             onContinue={() => setDisplayName(pendingName)}
+            onSignInWithGoogle={handleSignInWithGoogle}
           />
         </div>
 

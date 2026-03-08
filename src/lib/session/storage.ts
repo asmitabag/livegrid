@@ -6,6 +6,8 @@ type StoredSessionUser = Readonly<{
   userId: string;
   displayName: string;
   color: string;
+  email?: string;
+  photoURL?: string;
 }>;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -33,7 +35,9 @@ export function readSessionUserFromStorage(): SessionUser | null {
     const user: SessionUser = {
       userId: parsed.userId,
       displayName: parsed.displayName,
-      color: parsed.color
+      color: parsed.color,
+      email: parsed.email,
+      photoURL: parsed.photoURL
     };
     return user;
   } catch {
@@ -46,7 +50,9 @@ export function writeSessionUserToStorage(user: SessionUser): void {
   const toStore: StoredSessionUser = {
     userId: user.userId,
     displayName: user.displayName,
-    color: user.color
+    color: user.color,
+    email: user.email,
+    photoURL: user.photoURL
   };
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
 }

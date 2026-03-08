@@ -1,6 +1,6 @@
 export const DEFAULT_GRID = Object.freeze({
   rows: 40,
-  cols: 14
+  cols: 26
 });
 
 export const GRID_LIMITS = Object.freeze({

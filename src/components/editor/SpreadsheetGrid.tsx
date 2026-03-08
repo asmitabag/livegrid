@@ -317,9 +317,7 @@ export function SpreadsheetGrid({ editor, rows, cols, layout }: Props) {
                         className="relative shrink-0 cursor-col-resize"
                         style={{ width: RESIZE_GUTTER_PX, touchAction: "none" }}
                         title="Drag to resize column"
-                      >
-                        <div className="absolute right-[5px] top-0 h-full w-[2px] bg-slate-400/60" />
-                      </div>
+                      />
 
                       {reorderUi && isOver ? (
                         <div className="absolute inset-y-0 left-0 w-0.5 bg-blue-600" />
