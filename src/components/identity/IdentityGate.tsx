@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSessionUser } from "@/lib/session/useSessionUser";
+import { useSessionUser } from "@/lib/session/SessionUserContext";
 import { OnboardingCard } from "@/components/identity/OnboardingCard";
 import { signInWithGoogle } from "@/lib/firebase/auth";
 
@@ -15,9 +15,8 @@ export function IdentityGate({ children }: { children: React.ReactNode }) {
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-      // useSessionUser's onAuthStateChanged listener will pick up the signed-in user automatically.
     } catch (err) {
-      console.error("Google sign-in failed:", err);
+      alert(err instanceof Error ? err.message : "Google sign-in failed. Please try again.");
     }
   };
 

@@ -1,8 +1,10 @@
 import { Header } from "@/components/shell/Header";
 import { IdentityGate } from "@/components/identity/IdentityGate";
+import { SessionUserProvider } from "@/lib/session/SessionUserContext";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
+    <SessionUserProvider>
     <div className="min-h-dvh">
       <div className="livegrid-bg min-h-dvh">
         <Header />
@@ -12,5 +14,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
     </div>
+    </SessionUserProvider>
   );
 }

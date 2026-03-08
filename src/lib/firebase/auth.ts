@@ -15,7 +15,17 @@ export function getFirebaseAuth() {
 export async function signInWithGoogle(): Promise<void> {
   const auth = getFirebaseAuth();
   const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider);
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (err: unknown) {
+    const code = (err as { code?: string })?.code;
+    if (code === "auth/configuration-not-found") {
+      throw new Error(
+        "Google sign-in is not enabled yet. Please go to Firebase Console → Authentication → Sign-in method and enable Google."
+      );
+    }
+    throw err;
+  }
 }
 
 export async function signOut(): Promise<void> {
