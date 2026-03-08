@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+/* App theme tokens (light) */
+:root {
+  color-scheme: light;
+
+  --lg-surface: 0 0% 100%;
+  --lg-surface-2: 210 20% 98%;
+  --lg-border: 214 14% 90%;
+  --lg-text: 222 47% 11%;
+  --lg-text-muted: 215 16% 47%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: hsl(var(--lg-surface-2));
+  color: hsl(var(--lg-text));
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.18);
+}
+
+/* Subtle grid-like background */
+.livegrid-bg {
+  background-color: hsl(var(--lg-surface-2));
+  background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.06) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.45),
+    0 0 0 4px hsl(var(--lg-surface));
+}
