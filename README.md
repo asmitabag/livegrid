@@ -20,6 +20,7 @@ A collaborative spreadsheet editor where multiple users can edit the same grid c
 - Column/row resizing and column reordering
 - Export to CSV and JSON
 - Collaborator presence (avatars + current selected cell)
+- Google Sign-In / Sign-Out via Firebase Authentication
 
 ---
 
@@ -64,6 +65,11 @@ A collaborative spreadsheet editor where multiple users can edit the same grid c
 - **Export**
   - CSV: visible displayed values (computed)
   - JSON: raw values + formatting + layout metadata
+- **Google Sign-In / Sign-Out**
+  - Firebase Authentication with Google OAuth provider
+  - Sign-in gate on app entry (only authenticated users can access documents)
+  - Sign-out button in the app header
+  - Session user identity (name + avatar) used for presence tracking
 
 **Formula limitation during reordering:**  
 Columns are reordered visually using a `colOrder` mapping, but formulas are **not rewritten** (e.g. `=A1` still refers to the underlying A column index). This keeps formula semantics safe/predictable without complex rewrite logic.
@@ -92,10 +98,19 @@ Key goals:
   - `dashboard/` — document list + creation
   - `editor/` — toolbar, formula bar, grid, cell view
   - `presence/` — collaborator presence strip
+  - `identity/` — sign-in gate (`IdentityGate`) + onboarding card
+  - `shell/` — app shell, header (with sign-out button), logo, user badge
 - `src/lib/editor/`
   - `useSpreadsheetEditor.ts` — selection/edit state + optimistic writes
   - `useSpreadsheetEngine.ts` — formula engine view (incremental updates)
   - `useGridLayout.ts` — row/col sizing + reorder + export + persistence
+- `src/lib/firebase/`
+  - `auth.ts` — Firebase Auth instance + Google sign-in / sign-out helpers
+  - `client.ts` — Firebase app initialisation
+- `src/lib/session/`
+  - `useSessionUser.ts` — resolves the current authenticated user
+  - `SessionUserContext.tsx` — React context for the session user
+  - `createSessionUser.ts` — maps Firebase Auth user to session model
 - `src/lib/firestore/`
   - `cells.ts` — upsert + subscription helpers
   - `useDocumentCells.ts` — scoped cell subscription
